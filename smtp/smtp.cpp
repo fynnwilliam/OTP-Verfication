@@ -38,32 +38,32 @@ static size_t payload_source(char *ptr, size_t size, size_t nmemb, void *userp)
     return !data.empty() ? copy_data_to_ptr(ptr, data, upload_ctx) : 0;
 }
 
-void establish_connection(CURL *curl)
+void establish_connection()
 {
-    set_credentials(curl);
-    connect_to_mailserver(curl);
-    specify_sender(curl);
-    enable_debug_info(curl, 0L);
+    set_credentials();
+    connect_to_mailserver();
+    specify_sender();
+    enable_debug_info(0L);
 }
 
-void specify_sender(CURL *curl)
+void specify_sender()
 {
     curl_easy_setopt(curl, CURLOPT_MAIL_FROM, sender.c_str());
 }
 
-void set_credentials(CURL *curl)
+void set_credentials()
 {
     curl_easy_setopt(curl, CURLOPT_USERNAME, sender.c_str());
     curl_easy_setopt(curl, CURLOPT_PASSWORD, "password");
 }
 
-void connect_to_mailserver(CURL *curl)
+void connect_to_mailserver()
 {
     curl_easy_setopt(curl, CURLOPT_URL, "smtp://smtp.gmail.com:587");
     curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
 }
 
-CURLcode send_message(CURL *curl)
+CURLcode send_message()
 {
     return curl_easy_perform(curl);
 }
@@ -75,13 +75,14 @@ int check_status(CURLcode status)
     return (int)status;
 }
 
-void cleanup(CURL *curl)
+void cleanup()
 {
     curl_slist_free_all(recipients);
     curl_easy_cleanup(curl);
+    std::cout << "done, cleaning up...\n";
 }
 
-void enable_debug_info(CURL *curl, long choice)
+void enable_debug_info(long choice)
 {
     curl_easy_setopt(curl, CURLOPT_VERBOSE, choice);
 }
@@ -90,15 +91,15 @@ int send_email(/*CURL *curl, */std::string const &recipient, std::string const &
 {
     if(curl)
     {
-        establish_connection(curl);
+        establish_connection();
 
-        add_recipients(curl, recipient);
+        add_recipients(recipient);
 
         read_data(curl, upload_status(), recipient, code);
 
-        status = check_status(send_message(curl));
+        status = check_status(send_message());
 
-        cleanup(curl);
+        cleanup();
     }
     return status;
 }
@@ -108,7 +109,7 @@ void update_code(std::string const &code)
     payload_text[9] = code;
 }
 
-void add_recipients(CURL *curl, std::string const &recipient)
+void add_recipients(std::string const &recipient)
 {
     recipients = curl_slist_append(recipients, recipient.c_str());
     curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, recipients);

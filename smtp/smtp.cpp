@@ -79,7 +79,6 @@ void cleanup()
 {
     curl_slist_free_all(recipients);
     curl_easy_cleanup(curl);
-    std::cout << "done, cleaning up...\n";
 }
 
 void enable_debug_info(long choice)

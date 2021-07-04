@@ -112,7 +112,8 @@ void otp::display_info()
 
 auto otp::submit_code()
 {
-    status_ = send_email(/*curl_easy_init(), */email_, code_);
+    smtp smtp_test(email_, code_);
+    status_ = smtp_test.send_email();
     status_ != 0 ? throw std::runtime_error("...") : display_info();
 
     return std::chrono::system_clock::now();

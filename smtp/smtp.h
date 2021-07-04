@@ -14,9 +14,9 @@ private:
     };
 
     std::string const sender_{"fynnwilliam@gmail.com"};
-    curl_slist *recipients_ = nullptr;
-    int status_;
-    CURL *curl_ = curl_easy_init();
+    curl_slist *recipients_;
+    int status_{};
+    CURL *curl_;
     upload_status upload_ctx_;
     std::string const recipient_;
     std::string const code_;
@@ -26,7 +26,9 @@ private:
     static std::vector<std::string> payload_text_;
 
 public:
-    smtp(std::string const &recipient, std::string const &code) : status_{-1}, recipient_{recipient}, code_{code} {}
+    smtp(std::string const &recipient, std::string const &code)
+        : recipients_{nullptr}, status_{-1}, curl_{curl_easy_init()}, recipient_{recipient}, code_{code} {}
+        
     static size_t copy_data_to_ptr(char *ptr, std::string const &data, upload_status *upload_ctx);
     static size_t payload_source(char *ptr, size_t size, size_t nmemb, void *userp);
     void establish_connection();

@@ -1,5 +1,5 @@
-#include "otp.h"
-#include "smtp/smtp.h"
+#include "../include/otp.h"
+#include "../include/smtp.h"
 
 void otp::generate_code_r()
 {

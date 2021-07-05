@@ -1,4 +1,4 @@
-#include "../include/smtp.h"
+#include "smtp.h"
 
 std::vector<std::string> smtp::payload_text_{
     "to: ", "place_holder_recipient", "\n",

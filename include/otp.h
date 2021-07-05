@@ -12,25 +12,25 @@
 class otp
 {
 private:
-    std::string email_{};
-    std::vector<char> v_{};
-    std::string code_{};
+    std::string recipient_;
+    std::vector<char> v_;
+    std::string code_;
     const std::regex pattern;
     int status_{};
     std::string input_{};
-    std::string const sender_{"fynnwilliam@gmail.com"};
+    std::string const sender_;
 
 public:
-    otp() : input_{-1}, pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"} {}
+    otp(std::string s) : sender_{s}, input_{-1}, pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"} {}
     void generate_code_r();
     void inquire();
     void recipient_email();
     void to_lower();
     void trim_email();
-    bool is_email_valid();
+    bool is_recipient_valid();
     void generate_characters();
     int retry();
-    int verify_email();
+    int verify_recipient();
     void remove_leading_spaces();
     void remove_trailing_spaces();
     void authenticate_email_s();

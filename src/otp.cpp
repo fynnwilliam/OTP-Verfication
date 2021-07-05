@@ -1,5 +1,5 @@
-#include "../include/otp.h"
-#include "../include/smtp.h"
+#include "otp.h"
+#include "smtp.h"
 
 void otp::generate_code_r()
 {
@@ -21,18 +21,18 @@ void otp::recipient_email()
 {
     inquire();
 
-    while (std::getline(std::cin, email_))
+    while (std::getline(std::cin, recipient_))
     {
         trim_email();
         to_lower();
-        if (!verify_email())
+        if (!verify_recipient())
             break;
     }
 }
 
 void otp::to_lower()
 {
-    std::transform(email_.begin(), email_.end(), email_.begin(),
+    std::transform(recipient_.begin(), recipient_.end(), recipient_.begin(),
                    [](unsigned char c)
                    { return std::tolower(c); });
 }
@@ -43,9 +43,9 @@ void otp::trim_email()
     remove_trailing_spaces();
 }
 
-bool otp::is_email_valid()
+bool otp::is_recipient_valid()
 {
-    return std::regex_match(email_, pattern);
+    return std::regex_match(recipient_, pattern);
 }
 
 void otp::generate_characters()
@@ -57,26 +57,26 @@ void otp::generate_characters()
 
 int otp::retry()
 {
-    std::cout << (email_ == sender_ ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
+    std::cout << (recipient_ == sender_ ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
     return -1;
 }
 
-int otp::verify_email()
+int otp::verify_recipient()
 {
-    return email_ == sender_ ? retry() : is_email_valid() ? 0
+    return recipient_ == sender_ ? retry() : is_recipient_valid() ? 0
                                                           : retry();
 }
 
 void otp::remove_leading_spaces()
 {
-    while (email_.starts_with(' '))
-        email_.erase(0, 1);
+    while (recipient_.starts_with(' '))
+        recipient_.erase(0, 1);
 }
 
 void otp::remove_trailing_spaces()
 {
-    while (email_.ends_with(' '))
-        email_.pop_back();
+    while (recipient_.ends_with(' '))
+        recipient_.pop_back();
 }
 
 void otp::authenticate_email_s()
@@ -112,7 +112,7 @@ void otp::display_info()
 
 auto otp::submit_code()
 {
-    smtp smtp_test(email_, code_);
+    smtp smtp_test(sender_, recipient_, code_);
     status_ = smtp_test.send_email();
     status_ != 0 ? throw std::runtime_error("...") : display_info();
 

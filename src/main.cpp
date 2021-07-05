@@ -1,8 +1,8 @@
-#include "../include/otp.h"
+#include "otp.h"
 
 int main()
 {
-    otp test;
+    otp test("fynnwilliam@gmail.com");
     
     try
     {

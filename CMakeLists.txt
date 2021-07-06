@@ -7,10 +7,7 @@ project(otp_over_smtp)
 
 message(STATUS "Fetching curl")
 include(FetchContent)
-FetchContent_Declare(
-    curl
-    GIT_REPOSITORY https://github.com/curl/curl.git
-)
+FetchContent_Declare(curl GIT_REPOSITORY https://github.com/curl/curl.git)
 FetchContent_MakeAvailable(curl)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)

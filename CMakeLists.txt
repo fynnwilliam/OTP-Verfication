@@ -10,7 +10,7 @@ find_package(CURL 7.77.0)
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 add_executable(otp ${SRC_FILES})
 
-find_path(CURL_INCLUDE_DIRS ...)
+#find_path(CURL_INCLUDE_DIRS ...)
 
 if((NOT CURL_INCLUDE_DIRS) OR (NOT EXISTS ${CURL_INCLUDE_DIRS}))
     message("unable to find curl")
@@ -28,7 +28,7 @@ if((NOT CURL_INCLUDE_DIRS) OR (NOT EXISTS ${CURL_INCLUDE_DIRS}))
     #add_library(curl INTERFACE)
     target_include_directories(curl INTERFACE
                                $<BUILD_INTERFACE:${CURL_INCLUDE_DIRS}>
-                               $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build>)
+                               $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/build/bee>)
     
     #add_subdirectory(external/curl)
     # install(TARGETS curl EXPORT my_export_set DESTINATION ${some_dest})

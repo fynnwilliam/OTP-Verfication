@@ -23,20 +23,20 @@ private:
 public:
     otp(std::string s) : sender_{s}, input_{-1}, pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"} {}
     void generate_code_r();
-    void inquire();
+    void inquire() const;
     void recipient_email();
     void to_lower();
     void trim_email();
-    bool is_recipient_valid();
+    bool is_recipient_valid() const;
     void generate_characters();
-    int retry();
-    int verify_recipient();
+    int retry() const;
+    int verify_recipient() const;
     void remove_leading_spaces();
     void remove_trailing_spaces();
     void authenticate_email_s();
     void authenticate_email_r();
     void generate_code_s();
-    void display_info();
+    void display_info() const;
     auto submit_code();
     void certify();
     int declare(auto const &start);

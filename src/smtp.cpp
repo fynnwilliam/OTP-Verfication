@@ -86,9 +86,7 @@ int smtp::send_email()
     if(curl_)
     {
         establish_connection();
-
         add_recipients();
-
         read_data();
 
         status_ = check_status(send_message());

@@ -11,7 +11,7 @@ void otp::generate_code_r()
     code_ = std::to_string(distrib(g));
 }
 
-void otp::inquire()
+void otp::inquire() const
 {
     std::cout << "\nkindly enter your email address for the test...\n"
               << "\n\temail: ";
@@ -43,7 +43,7 @@ void otp::trim_email()
     remove_trailing_spaces();
 }
 
-bool otp::is_recipient_valid()
+bool otp::is_recipient_valid() const
 {
     return std::regex_match(recipient_, pattern);
 }
@@ -55,13 +55,13 @@ void otp::generate_characters()
             v_.push_back(i);
 }
 
-int otp::retry()
+int otp::retry() const
 {
     std::cout << (recipient_ == sender_ ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
     return -1;
 }
 
-int otp::verify_recipient()
+int otp::verify_recipient() const
 {
     return recipient_ == sender_ ? retry() : is_recipient_valid() ? 0
                                                           : retry();
@@ -102,7 +102,7 @@ void otp::generate_code_s()
     std::copy(v_.begin(), v_.begin() + 5, std::back_inserter(code_));
 }
 
-void otp::display_info()
+void otp::display_info() const
 {
     std::cout << "\nA temporary code has been sent to your email address.\n"
               << "If you do not receive this message in the next few minutes,\n"

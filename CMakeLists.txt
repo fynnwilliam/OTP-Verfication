@@ -7,11 +7,9 @@ project(otp_over_smtp)
 
 message(STATUS "Fetching curl")
 include(FetchContent)
-set(FETCHCONTENT_QUIET false)
 FetchContent_Declare(
     curl
     GIT_REPOSITORY https://github.com/curl/curl.git
-    GIT_PROGRESS true
 )
 FetchContent_MakeAvailable(curl)
 

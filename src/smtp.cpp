@@ -10,11 +10,11 @@ std::vector<std::string> smtp::payload_text_{
     "If you don't recognize the subject, someone probably gave your email address by mistake.\n",
     "You can safely ignore this email.\n\n",
     "Sincerely,\n",
-    "William",
+    "sender",
     "\0"
-    };
+};
 
-size_t smtp::copy_data_to_ptr(char *ptr, std::string const &data, upload_status *upload_ctx)
+size_t smtp::copy_data_to_ptr(char* ptr, std::string const& data, upload_status* upload_ctx)
 {
     std::memcpy(ptr, data.c_str(), data.size());
     upload_ctx->lines_read++;
@@ -22,12 +22,12 @@ size_t smtp::copy_data_to_ptr(char *ptr, std::string const &data, upload_status 
     return data.size();
 }
 
-size_t smtp::payload_source(char *ptr, size_t size, size_t nmemb, void *userp)
+size_t smtp::payload_source(char* ptr, size_t size, size_t nmemb, void* userp)
 {
     if ((size == 0) || (nmemb == 0) || ((size * nmemb) < 1))
         return 0;
 
-    upload_status *upload_ctx = (upload_status *)userp;
+    upload_status* upload_ctx = (upload_status*)userp;
     std::string data = payload_text_[upload_ctx->lines_read];
 
     return !data.empty() ? copy_data_to_ptr(ptr, data, upload_ctx) : 0;
@@ -66,7 +66,7 @@ CURLcode smtp::send_message()
 int smtp::check_status(CURLcode c_status)
 {
     if (c_status != CURLE_OK)
-        std::cout << "email not sent: " << curl_easy_strerror(c_status) << '\n';
+        std::cerr << "email not sent: " << curl_easy_strerror(c_status) << '\n';
     return (int)c_status;
 }
 
@@ -83,7 +83,7 @@ void smtp::enable_debug_info(long choice)
 
 int smtp::send_email()
 {
-    if(curl_)
+    if (curl_)
     {
         establish_connection();
         add_recipients();
@@ -118,7 +118,7 @@ void smtp::update_sender()
 void smtp::read_data()
 {
     update_payload_text();
-    
+
     curl_easy_setopt(curl_, CURLOPT_READFUNCTION, payload_source);
     curl_easy_setopt(curl_, CURLOPT_READDATA, &upload_ctx_);
     curl_easy_setopt(curl_, CURLOPT_UPLOAD, 1L);

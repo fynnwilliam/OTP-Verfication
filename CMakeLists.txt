@@ -17,7 +17,3 @@ target_include_directories(otp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(otp PUBLIC CURL::libcurl)
 
 target_compile_options(otp PRIVATE -w)
-
-# https://cmake.org/cmake/help/latest/module/FetchContent.html
-# https://github.com/foonathan/lexy/blob/main/tests/CMakeLists.txt#L6-L9
-# https://www.foonathan.net/2016/07/cmake-dependency-handling/

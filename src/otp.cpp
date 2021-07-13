@@ -33,8 +33,8 @@ void otp::recipient_email()
 void otp::to_lower()
 {
     std::transform(recipient_.begin(), recipient_.end(), recipient_.begin(),
-                   [](unsigned char c)
-                   { return std::tolower(c); });
+        [](unsigned char c)
+        { return std::tolower(c); });
 }
 
 void otp::trim_email()
@@ -64,7 +64,7 @@ int otp::retry() const
 int otp::verify_recipient() const
 {
     return recipient_ == sender_ ? retry() : is_recipient_valid() ? 0
-                                                          : retry();
+                                                                  : retry();
 }
 
 void otp::remove_leading_spaces()
@@ -112,7 +112,7 @@ void otp::display_info() const
 
 auto otp::submit_code()
 {
-    smtp smtp_test(sender_, recipient_, code_);
+    smtp smtp_test(sender_, password_, mailserver_, recipient_, code_);
     status_ = smtp_test.send_email();
     status_ != 0 ? throw std::runtime_error("...") : display_info();
 
@@ -125,7 +125,7 @@ void otp::certify()
     verify_code(start_);
 }
 
-int otp::declare(auto const &start)
+int otp::declare(auto const& start)
 {
     using namespace std::chrono;
     using namespace std::chrono_literals;
@@ -136,13 +136,13 @@ int otp::declare(auto const &start)
 }
 
 template <typename T>
-int otp::verify_input(T const &start)
+int otp::verify_input(T const& start)
 {
     return input_ == code_ ? declare(start) : retry();
 }
 
 template <typename T>
-void otp::verify_code(T const &start)
+void otp::verify_code(T const& start)
 {
     while (std::getline(std::cin, input_))
         if (!verify_input(start))

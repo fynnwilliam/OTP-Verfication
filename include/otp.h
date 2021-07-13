@@ -12,16 +12,21 @@
 class otp
 {
 private:
-    std::string recipient_;
     std::vector<char> v_;
+    std::string recipient_;
     std::string code_;
-    const std::regex pattern;
-    int status_{};
     std::string input_{};
     std::string const sender_;
+    std::string const password_;
+    std::string const mailserver_;
+    std::regex const pattern;
+    int status_{};
+
 
 public:
-    otp(std::string s) : sender_{s}, input_{-1}, pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"} {}
+    otp(std::string s, std::string p, std::string m)
+        : sender_{s}, password_{p}, mailserver_{m}, status_{-1}, pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"} {}
+
     void generate_code_r();
     void inquire() const;
     void recipient_email();
@@ -39,20 +44,11 @@ public:
     void display_info() const;
     auto submit_code();
     void certify();
-    int declare(auto const &start);
+    int declare(auto const& start);
 
     template <typename T>
-    int verify_input(T const &start);
+    int verify_input(T const& start);
 
     template <typename T>
-    void verify_code(T const &start);
+    void verify_code(T const& start);
 };
-
-// https://www.ascii-code.com/
-// https://en.cppreference.com/w/cpp/algorithm/copy
-// https://www.merriam-webster.com/thesaurus/observe
-// https://en.cppreference.com/w/cpp/error/exception
-// https://www.merriam-webster.com/dictionary/certify
-// https://en.cppreference.com/w/cpp/string/byte/isalpha
-// https://en.cppreference.com/w/cpp/algorithm/random_shuffle
-// https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution

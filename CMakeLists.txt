@@ -5,10 +5,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(otp_over_smtp)
 
-message(STATUS "Fetching curl")
-include(FetchContent)
-FetchContent_Declare(curl GIT_REPOSITORY https://github.com/curl/curl.git)
-FetchContent_MakeAvailable(curl)
+message(STATUS "Looking for curl")
+find_package(CURL 7.74.0)
+
+if(NOT CURL_FOUND)
+    message(STATUS "Fetching curl")
+    include(FetchContent)
+    FetchContent_Declare(curl GIT_REPOSITORY https://github.com/curl/curl.git)
+    FetchContent_MakeAvailable(curl)
+endif()
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 add_executable(otp ${SRC_FILES})

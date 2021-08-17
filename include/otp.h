@@ -22,14 +22,8 @@ private:
     std::regex const pattern;
     int status_{};
 
-
-public:
-    otp(std::string s, std::string p, std::string m)
-        : sender_{s}, password_{p}, mailserver_{m}, status_{-1}, pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"} {}
-
     void generate_code_r();
     void inquire() const;
-    void recipient_email();
     void to_lower();
     void trim_email();
     bool is_recipient_valid() const;
@@ -38,8 +32,6 @@ public:
     int verify_recipient() const;
     void remove_leading_spaces();
     void remove_trailing_spaces();
-    void authenticate_email_s();
-    void authenticate_email_r();
     void generate_code_s();
     void display_info() const;
     auto submit_code();
@@ -51,4 +43,12 @@ public:
 
     template <typename T>
     void verify_code(T const& start);
+
+public:
+    otp(std::string s, std::string p, std::string m)
+        : sender_{s}, password_{p}, mailserver_{m}, status_{-1}, pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"} {}
+
+    void recipient_email();
+    void authenticate_email_s();
+    void authenticate_email_r();
 };

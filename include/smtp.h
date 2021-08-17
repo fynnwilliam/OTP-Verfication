@@ -14,8 +14,8 @@ private:
     };
 
     curl_slist* recipients_;
-    int status_{};
     CURL* curl_;
+    int status_{};
     upload_status upload_ctx_;
     std::string const sender_;
     std::string const password_;
@@ -25,10 +25,6 @@ private:
 
     static std::vector<std::string> payload_text_;
 
-public:
-    smtp(std::string const& s, std::string const& p, std::string const& m, std::string const& r, std::string const& c)
-        : recipients_{nullptr}, status_{-1}, curl_{curl_easy_init()}, sender_{s}, password_{p}, mailserver_{m}, recipient_{r}, code_{c} {}
-
     static size_t copy_data_to_ptr(char* ptr, std::string const& data, upload_status* upload_ctx);
     static size_t payload_source(char* ptr, size_t size, size_t nmemb, void* userp);
     void establish_connection();
@@ -37,7 +33,6 @@ public:
     CURLcode send_message();
     int check_status(CURLcode status);
     void cleanup();
-    int send_email();
     void update_code();
     void add_recipients();
     void update_recipient();
@@ -46,5 +41,11 @@ public:
     void enable_debug_info(long choice);
     void specify_sender();
     void update_sender();
+    
+public:
+    smtp(std::string const& s, std::string const& p, std::string const& m, std::string const& r, std::string const& c)
+        : recipients_{nullptr}, status_{-1}, curl_{curl_easy_init()}, sender_{s}, password_{p}, mailserver_{m}, recipient_{r}, code_{c} {}
+
+    int send_email();
     ~smtp() { cleanup(); }
 };

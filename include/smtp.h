@@ -13,9 +13,9 @@ private:
         int lines_read{};
     };
 
-    curl_slist* recipients_;
+    curl_slist* recipients_{nullptr};
     CURL* curl_;
-    int status_{};
+    int status_{-1};
     upload_status upload_ctx_;
     std::string const sender_;
     std::string const password_;
@@ -44,7 +44,7 @@ private:
     
 public:
     smtp(std::string const& s, std::string const& p, std::string const& m, std::string const& r, std::string const& c)
-        : recipients_{nullptr}, status_{-1}, curl_{curl_easy_init()}, sender_{s}, password_{p}, mailserver_{m}, recipient_{r}, code_{c} {}
+        : curl_{curl_easy_init()}, sender_{s}, password_{p}, mailserver_{m}, recipient_{r}, code_{c} {}
 
     int send_email();
     ~smtp() { cleanup(); }

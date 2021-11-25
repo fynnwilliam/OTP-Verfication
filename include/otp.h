@@ -1,3 +1,5 @@
+#pragma once
+
 #include <algorithm>
 #include <iterator>
 #include <iostream>
@@ -15,12 +17,12 @@ private:
     std::vector<char> v_;
     std::string recipient_;
     std::string code_;
-    std::string input_{};
+    std::string input_;
     std::string const sender_;
     std::string const password_;
     std::string const mailserver_;
-    std::regex const pattern;
-    int status_{};
+    std::regex const pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"};
+    int status_{-1};
 
     void generate_code_r();
     void inquire() const;
@@ -46,7 +48,7 @@ private:
 
 public:
     otp(std::string s, std::string p, std::string m)
-        : sender_{s}, password_{p}, mailserver_{m}, status_{-1}, pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"} {}
+        : sender_{s}, password_{p}, mailserver_{m} {}
 
     void recipient_email();
     void authenticate_email_s();

@@ -122,9 +122,8 @@ void otp::display_info() const noexcept
 
 auto otp::submit_code()
 {
-    smtp smtp_test(sender_, password_, mailserver_, recipient_, code_);
-    status_ = smtp_test.send_email();
-    status_ != 0 ? throw std::runtime_error("...") : display_info();
+    smtp _smtp(sender_, password_, mailserver_, recipient_, code_);
+    _smtp.send_email() ? throw std::runtime_error("...") : display_info();
 
     return std::chrono::system_clock::now();
 }

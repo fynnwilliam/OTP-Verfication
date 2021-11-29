@@ -1,5 +1,8 @@
 #include "smtp.h"
 
+#include <cstring>
+#include <iostream>
+
 std::vector<std::string> smtp::payload_text_{
     "to: ", "place_holder_recipient", "\n",
     "from: ", "place_holder_sender", "\n",

@@ -27,8 +27,8 @@ private:
     void remove_trailing_spaces() noexcept;
     void generate_code_s() noexcept;
     void display_info() const noexcept;
-    auto submit_code();
-    void certify();
+    auto submit_code() const;
+    void certify() const;
     int declare(auto const&) const noexcept;
 
     template <typename T>

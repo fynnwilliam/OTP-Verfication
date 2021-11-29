@@ -120,7 +120,7 @@ void otp::display_info() const noexcept
               << "\n\tcode: ";
 }
 
-auto otp::submit_code()
+auto otp::submit_code() const
 {
     smtp _smtp(sender_, password_, mailserver_, recipient_, code_);
     _smtp.send_email() ? throw std::runtime_error("...") : display_info();
@@ -128,7 +128,7 @@ auto otp::submit_code()
     return std::chrono::system_clock::now();
 }
 
-void otp::certify()
+void otp::certify() const
 {
     auto start_ = submit_code();
     verify_code(start_);

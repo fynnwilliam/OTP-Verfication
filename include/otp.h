@@ -30,7 +30,7 @@ private:
     void to_lower();
     void trim_email();
     bool is_recipient_valid() const;
-    void generate_characters();
+    std::vector<char> generate_characters();
     int retry() const;
     int verify_recipient() const;
     void remove_leading_spaces();

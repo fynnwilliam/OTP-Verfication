@@ -50,11 +50,13 @@ bool otp::is_recipient_valid() const
     return std::regex_match(recipient_, pattern);
 }
 
-void otp::generate_characters()
+std::vector<char> otp::generate_characters()
 {
+    std::vector<char> v;
     for (int i = 48; i < 123; i++)
         if (std::isalpha(i) || std::isdigit(i))
-            v_.push_back(i);
+            v.push_back(i);
+    return v;
 }
 
 int otp::retry() const

@@ -146,7 +146,8 @@ int otp::verify_input(T const& start)
 template <typename T>
 void otp::verify_code(T const& start)
 {
-    while (std::getline(std::cin, input_))
+    std::string input;
+    while (std::getline(std::cin, input))
         if (!verify_input(start))
             break;
 }

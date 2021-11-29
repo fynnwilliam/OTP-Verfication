@@ -47,5 +47,6 @@ public:
         : curl_{curl_easy_init()}, recipient_{r}, code_{c} {}
 
     int send_email();
+    std::string const& sender() const noexcept;
     ~smtp() { cleanup(); }
 };

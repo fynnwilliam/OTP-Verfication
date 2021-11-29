@@ -14,6 +14,11 @@ std::vector<std::string> smtp::payload_text_{
     "\0"
 };
 
+std::string const& smtp::sender() const noexcept
+{
+    return sender_;
+}
+
 size_t smtp::copy_data_to_ptr(char* ptr, std::string const& data, upload_status* upload_ctx)
 {
     std::memcpy(ptr, data.c_str(), data.size());

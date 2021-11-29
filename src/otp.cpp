@@ -99,12 +99,14 @@ void otp::remove_trailing_spaces() noexcept
 
 void otp::authenticate_email_s()
 {
+    recipient_email();
     generate_code_s();
     certify();
 }
 
 void otp::authenticate_email_r()
 {
+    recipient_email();
     generate_code_r();
     certify();
 }

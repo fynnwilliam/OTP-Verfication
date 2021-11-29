@@ -4,12 +4,9 @@
 
 int main()
 {
-    otp test{};
-
     try
     {
-        test.recipient_email();
-        test.authenticate_email_r();
+        otp{}.authenticate_email_r();
     }
 
     catch (std::exception const& e)

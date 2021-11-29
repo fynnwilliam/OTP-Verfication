@@ -24,6 +24,7 @@ private:
     void display_info() const noexcept;
     auto submit_code() const;
     void certify() const;
+    void recipient_email();
     int success() const noexcept;
     int make_new_request() const noexcept;
     int declare(auto const&) const noexcept;
@@ -41,7 +42,6 @@ private:
 public:
     otp() = default;
 
-    void recipient_email();
     void authenticate_email_s();
     void authenticate_email_r();
 };

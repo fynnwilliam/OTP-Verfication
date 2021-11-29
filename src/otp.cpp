@@ -130,8 +130,8 @@ auto otp::submit_code() const
 
 void otp::certify() const
 {
-    auto start_ = submit_code();
-    verify_code(start_);
+    auto start = submit_code();
+    verify_code(start);
 }
 
 int otp::declare(auto const& start) const noexcept

@@ -69,14 +69,20 @@ std::vector<char> otp::generate_characters() const noexcept
 
 int otp::retry() const noexcept
 {
-    std::cout << (recipient() == smtp{}.sender() ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
+    std::cout << "\tcheck for typos or extra spaces and try again: ";
+    return -1;
+}
+
+int otp::invalid_recipient() const noexcept
+{
+    std::cout << "\tthe email address is already in use, please use another address: ";
     return -1;
 }
 
 int otp::verify_recipient() const noexcept
 {
-    return recipient() == smtp{}.sender() ? retry() :
-                     is_recipient_valid() ?   0     : retry();
+    return recipient() == smtp{}.sender() ? invalid_recipient() :
+                     is_recipient_valid() ? 0                   : retry();
 }
 
 void otp::remove_leading_spaces() noexcept

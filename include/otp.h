@@ -16,6 +16,7 @@ private:
     bool is_recipient_valid() const noexcept;
     std::vector<char> generate_characters() const noexcept;
     int retry() const noexcept;
+    int invalid_recipient() const noexcept;
     int verify_recipient() const noexcept;
     void remove_leading_spaces() noexcept;
     void remove_trailing_spaces() noexcept;

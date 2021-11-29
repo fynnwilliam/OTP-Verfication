@@ -21,4 +21,4 @@ add_executable(otp ${SRC_FILES})
 target_include_directories(otp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(otp PUBLIC CURL::libcurl)
 
-target_compile_options(otp PRIVATE -w)
+target_compile_options(otp PRIVATE -Wall -O3)

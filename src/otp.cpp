@@ -10,9 +10,6 @@
 #include <utility>
 #include <regex>
 
-otp::otp(std::string s, std::string p, std::string m)
-        : sender_{std::move(s)}, password_{std::move(p)}, mailserver_{std::move(m)} {}
-
 void otp::generate_code_r() noexcept
 {
     std::random_device rd;

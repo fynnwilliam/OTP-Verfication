@@ -9,9 +9,6 @@ class otp
 private:
     std::string recipient_;
     std::string code_;
-    std::string const sender_;
-    std::string const password_;
-    std::string const mailserver_;
 
     void generate_code_r() noexcept;
     void inquire() const noexcept;
@@ -36,7 +33,7 @@ private:
     void verify_code(T const&) const noexcept;
 
 public:
-    otp(std::string, std::string, std::string);
+    otp() = default;
 
     void recipient_email();
     void authenticate_email_s();

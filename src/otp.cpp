@@ -1,6 +1,14 @@
 #include "otp.h"
 #include "smtp.h"
 
+#include <algorithm>
+#include <iterator>
+#include <exception>
+#include <random>
+#include <chrono>
+#include <cctype>
+#include <utility>
+
 otp::otp(std::string s, std::string p, std::string m)
         : sender_{std::move(s)}, password_{std::move(p)}, mailserver_{std::move(m)} {}
 

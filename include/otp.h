@@ -1,16 +1,9 @@
 #pragma once
 
-#include <algorithm>
-#include <iterator>
 #include <iostream>
-#include <exception>
 #include <vector>
 #include <string>
-#include <random>
-#include <chrono>
-#include <cctype>
 #include <regex>
-#include <utility>
 
 class otp
 {

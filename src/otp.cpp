@@ -130,16 +130,17 @@ void otp::display_info() const noexcept
 
 auto otp::submit_code() const
 {
-    smtp _smtp(recipient(), code());
-    _smtp.send_email() ? throw std::runtime_error("...") : display_info();
+    return smtp{recipient(), code()}.send_email();
+}
 
-    return std::chrono::system_clock::now();
+void otp::error_msg() const noexcept
+{
+    std::cout << "please check your ISP or contact developer.\n";
 }
 
 void otp::certify() const
 {
-    auto start = submit_code();
-    verify_code(start);
+    submit_code() ? error_msg() : verify_code(std::chrono::system_clock::now());
 }
 
 int otp::success() const noexcept
@@ -192,6 +193,8 @@ int otp::verify_input(T const& start, std::string const& input) const noexcept
 template <typename T>
 void otp::verify_code(T const& start) const noexcept
 {
+    display_info();
+
     std::string input;
     while (std::getline(std::cin, input))
         if (!verify_input(start, input))

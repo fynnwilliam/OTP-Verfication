@@ -23,6 +23,7 @@ private:
     void generate_code_s() noexcept;
     void display_info() const noexcept;
     auto submit_code() const;
+    void error_msg() const noexcept;
     void certify() const;
     void recipient_email();
     int success() const noexcept;

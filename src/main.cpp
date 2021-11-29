@@ -4,13 +4,5 @@
 
 int main()
 {
-    try
-    {
-        otp{}.authenticate_email_r();
-    }
-
-    catch (std::exception const& e)
-    {
-        std::cout << "please check your ISP or contact developer.\n";
-    }
+    otp{}.authenticate_email_r();
 }

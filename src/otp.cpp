@@ -83,7 +83,6 @@ void otp::remove_trailing_spaces()
 
 void otp::authenticate_email_s()
 {
-    generate_characters();
     generate_code_s();
     certify();
 }
@@ -96,6 +95,7 @@ void otp::authenticate_email_r()
 
 void otp::generate_code_s()
 {
+    generate_characters();
     std::shuffle(v_.begin(), v_.end(), std::mt19937{std::random_device{}()});
 
     code_.clear();

@@ -7,9 +7,6 @@ int main()
     try
     {
         test.recipient_email();
-        test.authenticate_email_s();
-
-        test.recipient_email();
         test.authenticate_email_r();
     }
 

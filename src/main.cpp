@@ -1,5 +1,7 @@
 #include "otp.h"
 
+#include <iostream>
+
 int main()
 {
     otp test{};

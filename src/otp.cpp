@@ -4,11 +4,9 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
-#include <exception>
 #include <random>
 #include <chrono>
 #include <cctype>
-#include <utility>
 #include <regex>
 
 void otp::generate_code_r() noexcept

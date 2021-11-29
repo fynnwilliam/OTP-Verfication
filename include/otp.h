@@ -15,7 +15,6 @@
 class otp
 {
 private:
-    std::vector<char> v_;
     std::string recipient_;
     std::string code_;
     std::string input_;

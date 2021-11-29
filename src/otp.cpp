@@ -71,13 +71,13 @@ std::vector<char> otp::generate_characters() const noexcept
 
 int otp::retry() const noexcept
 {
-    std::cout << (recipient_ == sender_ ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
+    std::cout << (recipient_ == smtp{}.sender() ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
     return -1;
 }
 
 int otp::verify_recipient() const noexcept
 {
-    return recipient_ == sender_ ? retry() : is_recipient_valid() ? 0
+    return recipient_ == smtp{}.sender() ? retry() : is_recipient_valid() ? 0
                                                                   : retry();
 }
 

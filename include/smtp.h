@@ -17,9 +17,9 @@ private:
     CURL* curl_;
     int status_{-1};
     upload_status upload_ctx_;
-    std::string const sender_;
-    std::string const password_;
-    std::string const mailserver_;
+    std::string const sender_{"sender's_email"};
+    std::string const password_{"passwd"};
+    std::string const mailserver_{"mailserver"};
     std::string const recipient_;
     std::string const code_;
 
@@ -43,8 +43,8 @@ private:
     void update_sender();
     
 public:
-    smtp(std::string const& s, std::string const& p, std::string const& m, std::string const& r, std::string const& c)
-        : curl_{curl_easy_init()}, sender_{s}, password_{p}, mailserver_{m}, recipient_{r}, code_{c} {}
+    smtp(std::string const& r, std::string const& c)
+        : curl_{curl_easy_init()}, recipient_{r}, code_{c} {}
 
     int send_email();
     ~smtp() { cleanup(); }

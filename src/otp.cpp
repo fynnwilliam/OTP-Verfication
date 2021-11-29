@@ -97,11 +97,11 @@ void otp::authenticate_email_r()
 
 void otp::generate_code_s()
 {
-    generate_characters();
-    std::shuffle(v_.begin(), v_.end(), std::mt19937{std::random_device{}()});
+    auto&& v = generate_characters();
+    std::shuffle(v.begin(), v.end(), std::mt19937{std::random_device{}()});
 
     code_.clear();
-    std::copy(v_.begin(), v_.begin() + 5, std::back_inserter(code_));
+    std::copy(v.begin(), v.begin() + 5, std::back_inserter(code_));
 }
 
 void otp::display_info() const

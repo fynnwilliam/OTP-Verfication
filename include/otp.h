@@ -14,7 +14,6 @@ private:
     std::string const password_;
     std::string const mailserver_;
     std::regex const pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"};
-    int status_{-1};
 
     void generate_code_r() noexcept;
     void inquire() const noexcept;

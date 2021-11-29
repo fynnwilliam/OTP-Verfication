@@ -17,7 +17,6 @@ class otp
 private:
     std::string recipient_;
     std::string code_;
-    std::string input_;
     std::string const sender_;
     std::string const password_;
     std::string const mailserver_;

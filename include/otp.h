@@ -38,17 +38,16 @@ private:
     void display_info() const;
     auto submit_code();
     void certify();
-    int declare(auto const& start);
+    int declare(auto const&);
 
     template <typename T>
-    int verify_input(T const& start);
+    int verify_input(T const&);
 
     template <typename T>
-    void verify_code(T const& start);
+    void verify_code(T const&);
 
 public:
-    otp(std::string s, std::string p, std::string m)
-        : sender_{s}, password_{p}, mailserver_{m} {}
+    otp(std::string, std::string, std::string);
 
     void recipient_email();
     void authenticate_email_s();

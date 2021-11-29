@@ -1,6 +1,9 @@
 #include "otp.h"
 #include "smtp.h"
 
+otp::otp(std::string s, std::string p, std::string m)
+        : sender_{s}, password_{p}, mailserver_{m} {}
+
 void otp::generate_code_r()
 {
     std::random_device rd;
@@ -20,7 +23,6 @@ void otp::inquire() const
 void otp::recipient_email()
 {
     inquire();
-
     while (std::getline(std::cin, recipient_))
     {
         trim_email();
@@ -81,10 +83,8 @@ void otp::remove_trailing_spaces()
 
 void otp::authenticate_email_s()
 {
-
     generate_characters();
     generate_code_s();
-
     certify();
 }
 

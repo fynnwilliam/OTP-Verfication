@@ -55,6 +55,7 @@ void otp::trim_email() noexcept
 
 bool otp::is_recipient_valid() const noexcept
 {
+    std::regex pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"};
     return std::regex_match(recipient_, pattern);
 }
 

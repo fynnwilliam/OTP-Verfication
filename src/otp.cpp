@@ -63,7 +63,7 @@ bool otp::is_recipient_valid() const noexcept
 std::vector<char> otp::generate_characters() const noexcept
 {
     std::vector<char> characters;
-    for (int i = 48; i < 123; i++)
+    for (int i = 48; i < 123; ++i)
         if (std::isalpha(i) || std::isdigit(i))
             characters.push_back(i);
     return characters;
@@ -124,7 +124,7 @@ void otp::display_info() const noexcept
 
 auto otp::submit_code() const
 {
-    smtp _smtp(sender_, password_, mailserver_, recipient_, code_);
+    smtp _smtp(recipient_, code_);
     _smtp.send_email() ? throw std::runtime_error("...") : display_info();
 
     return std::chrono::system_clock::now();

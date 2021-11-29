@@ -2,7 +2,7 @@
 Performing OTP verification over SMTP
 
 
-> Kindly update `sender's email`, `passwd`, and `mailserver` from `main.cpp`
+> Kindly update `sender's email`, `passwd`, and `mailserver` from `smtp.h`
 
 
 ##### compile

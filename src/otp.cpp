@@ -140,14 +140,25 @@ void otp::certify() const
     verify_code(start);
 }
 
+int otp::success() const noexcept
+{
+    std::cout << "\ngreat! you got it...\n\n";
+    return 0;
+}
+
+int otp::make_new_request() const noexcept
+{
+    std::cout << "code has expired, kindly make a new request.\n";
+    return 0;
+}
+
 int otp::declare(auto const& start) const noexcept
 {
     using namespace std::chrono;
     using namespace std::chrono_literals;
     duration<int> elapsed_time = duration_cast<minutes>(system_clock::now() - start);
 
-    std::cout << (elapsed_time <= 5min ? "\ngreat! you got it...\n\n" : "code has expired, kindly make a new request.\n");
-    return 0;
+    return elapsed_time <= 5min ? success() : make_new_request();
 }
 
 std::string const& otp::recipient() const noexcept

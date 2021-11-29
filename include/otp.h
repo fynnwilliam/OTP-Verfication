@@ -24,6 +24,8 @@ private:
     void display_info() const noexcept;
     auto submit_code() const;
     void certify() const;
+    int success() const noexcept;
+    int make_new_request() const noexcept;
     int declare(auto const&) const noexcept;
     std::string const& recipient() const noexcept;
     std::string& recipient() noexcept;

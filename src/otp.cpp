@@ -4,7 +4,7 @@
 otp::otp(std::string s, std::string p, std::string m)
         : sender_{std::move(s)}, password_{std::move(p)}, mailserver_{std::move(m)} {}
 
-void otp::generate_code_r()
+void otp::generate_code_r() noexcept
 {
     std::random_device rd;
     std::mt19937 g(rd());
@@ -14,7 +14,7 @@ void otp::generate_code_r()
     code_ = std::to_string(distrib(g));
 }
 
-void otp::inquire() const
+void otp::inquire() const noexcept
 {
     std::cout << "\nkindly enter your email address for the test...\n"
               << "\n\temail: ";
@@ -32,25 +32,25 @@ void otp::recipient_email()
     }
 }
 
-void otp::to_lower()
+void otp::to_lower() noexcept
 {
     std::transform(recipient_.begin(), recipient_.end(), recipient_.begin(),
         [](unsigned char c)
         { return std::tolower(c); });
 }
 
-void otp::trim_email()
+void otp::trim_email() noexcept
 {
     remove_leading_spaces();
     remove_trailing_spaces();
 }
 
-bool otp::is_recipient_valid() const
+bool otp::is_recipient_valid() const noexcept
 {
     return std::regex_match(recipient_, pattern);
 }
 
-std::vector<char> otp::generate_characters()
+std::vector<char> otp::generate_characters() const noexcept
 {
     std::vector<char> characters;
     for (int i = 48; i < 123; i++)
@@ -59,25 +59,25 @@ std::vector<char> otp::generate_characters()
     return characters;
 }
 
-int otp::retry() const
+int otp::retry() const noexcept
 {
     std::cout << (recipient_ == sender_ ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
     return -1;
 }
 
-int otp::verify_recipient() const
+int otp::verify_recipient() const noexcept
 {
     return recipient_ == sender_ ? retry() : is_recipient_valid() ? 0
                                                                   : retry();
 }
 
-void otp::remove_leading_spaces()
+void otp::remove_leading_spaces() noexcept
 {
     while (recipient_.starts_with(' '))
         recipient_.erase(0, 1);
 }
 
-void otp::remove_trailing_spaces()
+void otp::remove_trailing_spaces() noexcept
 {
     while (recipient_.ends_with(' '))
         recipient_.pop_back();
@@ -95,7 +95,7 @@ void otp::authenticate_email_r()
     certify();
 }
 
-void otp::generate_code_s()
+void otp::generate_code_s() noexcept
 {
     auto&& v = generate_characters();
     std::shuffle(v.begin(), v.end(), std::mt19937{std::random_device{}()});
@@ -104,7 +104,7 @@ void otp::generate_code_s()
     std::copy(v.begin(), v.begin() + 5, std::back_inserter(code_));
 }
 
-void otp::display_info() const
+void otp::display_info() const noexcept
 {
     std::cout << "\nA temporary code has been sent to your email address.\n"
               << "If you do not receive this message in the next few minutes,\n"
@@ -127,7 +127,7 @@ void otp::certify()
     verify_code(start_);
 }
 
-int otp::declare(auto const& start)
+int otp::declare(auto const& start) const noexcept
 {
     using namespace std::chrono;
     using namespace std::chrono_literals;
@@ -138,13 +138,13 @@ int otp::declare(auto const& start)
 }
 
 template <typename T>
-int otp::verify_input(T const& start, std::string const& input)
+int otp::verify_input(T const& start, std::string const& input) const noexcept
 {
     return input == code_ ? declare(start) : retry();
 }
 
 template <typename T>
-void otp::verify_code(T const& start)
+void otp::verify_code(T const& start) const noexcept
 {
     std::string input;
     while (std::getline(std::cin, input))

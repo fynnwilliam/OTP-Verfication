@@ -23,27 +23,27 @@ private:
     std::regex const pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"};
     int status_{-1};
 
-    void generate_code_r();
-    void inquire() const;
-    void to_lower();
-    void trim_email();
-    bool is_recipient_valid() const;
-    std::vector<char> generate_characters();
-    int retry() const;
-    int verify_recipient() const;
-    void remove_leading_spaces();
-    void remove_trailing_spaces();
-    void generate_code_s();
-    void display_info() const;
+    void generate_code_r() noexcept;
+    void inquire() const noexcept;
+    void to_lower() noexcept;
+    void trim_email() noexcept;
+    bool is_recipient_valid() const noexcept;
+    std::vector<char> generate_characters() const noexcept;
+    int retry() const noexcept;
+    int verify_recipient() const noexcept;
+    void remove_leading_spaces() noexcept;
+    void remove_trailing_spaces() noexcept;
+    void generate_code_s() noexcept;
+    void display_info() const noexcept;
     auto submit_code();
     void certify();
-    int declare(auto const&);
+    int declare(auto const&) const noexcept;
 
     template <typename T>
-    int verify_input(T const&, std::string const&);
+    int verify_input(T const&, std::string const&) const noexcept;
 
     template <typename T>
-    void verify_code(T const&);
+    void verify_code(T const&) const noexcept;
 
 public:
     otp(std::string, std::string, std::string);

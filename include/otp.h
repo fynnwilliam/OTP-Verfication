@@ -15,9 +15,9 @@ private:
     void trim_email() noexcept;
     bool is_recipient_valid() const noexcept;
     std::vector<char> generate_characters() const noexcept;
-    int retry() const noexcept;
-    int invalid_recipient() const noexcept;
-    int verify_recipient() const noexcept;
+    void retry() const noexcept;
+    bool invalid_recipient() const noexcept;
+    bool verify_recipient() const noexcept;
     void remove_leading_spaces() noexcept;
     void remove_trailing_spaces() noexcept;
     void generate_code_s() noexcept;
@@ -26,16 +26,13 @@ private:
     void error_msg() const noexcept;
     void certify() const;
     void recipient_email();
-    int success() const noexcept;
-    int make_new_request() const noexcept;
-    int declare(auto const&) const noexcept;
+    void success() const noexcept;
+    void make_new_request() const noexcept;
+    void declare(auto const&) const noexcept;
     std::string const& recipient() const noexcept;
     std::string& recipient() noexcept;
     std::string& code() noexcept;
     std::string const& code() const noexcept;
-
-    template <typename T>
-    int verify_input(T const&, std::string const&) const noexcept;
 
     template <typename T>
     void verify_code(T const&) const noexcept;

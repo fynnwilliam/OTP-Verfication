@@ -34,8 +34,8 @@ void otp::recipient_email()
     {
         trim_email();
         to_lower();
-        if (!verify_recipient())
-            break;
+        if (verify_recipient()) break;
+        retry();
     }
 }
 
@@ -67,22 +67,20 @@ std::vector<char> otp::generate_characters() const noexcept
     return characters;
 }
 
-int otp::retry() const noexcept
+void otp::retry() const noexcept
 {
-    std::cout << "\tcheck for typos or extra spaces and try again: ";
-    return -1;
+    std::cout << "\tkindly check for typos or extra spaces and try again: ";
 }
 
-int otp::invalid_recipient() const noexcept
+bool otp::invalid_recipient() const noexcept
 {
-    std::cout << "\tthe email address is already in use, please use another address: ";
-    return -1;
+    std::cout << "\n\tthe email address is already in use, please use another address or\n";
+    return false;
 }
 
-int otp::verify_recipient() const noexcept
+bool otp::verify_recipient() const noexcept
 {
-    return recipient() == smtp{}.sender() ? invalid_recipient() :
-                     is_recipient_valid() ? 0                   : retry();
+    return recipient() == smtp{}.sender() ? invalid_recipient() : is_recipient_valid();
 }
 
 void otp::remove_leading_spaces() noexcept
@@ -143,25 +141,23 @@ void otp::certify() const
     submit_code() ? error_msg() : verify_code(std::chrono::system_clock::now());
 }
 
-int otp::success() const noexcept
+void otp::success() const noexcept
 {
     std::cout << "\ngreat! you got it...\n\n";
-    return 0;
 }
 
-int otp::make_new_request() const noexcept
+void otp::make_new_request() const noexcept
 {
     std::cout << "code has expired, kindly make a new request.\n";
-    return 0;
 }
 
-int otp::declare(auto const& start) const noexcept
+void otp::declare(auto const& start) const noexcept
 {
     using namespace std::chrono;
     using namespace std::chrono_literals;
     duration<int> elapsed_time = duration_cast<minutes>(system_clock::now() - start);
 
-    return elapsed_time <= 5min ? success() : make_new_request();
+    elapsed_time <= 5min ? success() : make_new_request();
 }
 
 std::string const& otp::recipient() const noexcept
@@ -185,18 +181,13 @@ std::string const& otp::code() const noexcept
 }
 
 template <typename T>
-int otp::verify_input(T const& start, std::string const& input) const noexcept
-{
-    return input == code() ? declare(start) : retry();
-}
-
-template <typename T>
 void otp::verify_code(T const& start) const noexcept
 {
     display_info();
 
     std::string input;
-    while (std::getline(std::cin, input))
-        if (!verify_input(start, input))
-            break;
+    while (std::getline(std::cin, input) && input != code())
+        retry();
+
+    declare(start);
 }

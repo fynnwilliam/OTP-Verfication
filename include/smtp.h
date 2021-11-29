@@ -43,6 +43,7 @@ private:
     void update_sender();
     
 public:
+    smtp() = default;
     smtp(std::string const& r, std::string const& c)
         : curl_{curl_easy_init()}, recipient_{r}, code_{c} {}
 

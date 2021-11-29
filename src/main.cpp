@@ -2,7 +2,7 @@
 
 int main()
 {
-    otp test("sender's_email", "passwd", "mailserver");
+    otp test{"sender's_email", "passwd", "mailserver"};
 
     try
     {

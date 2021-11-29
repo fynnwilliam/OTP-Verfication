@@ -18,7 +18,7 @@ void otp::generate_code_r() noexcept
 
     std::uniform_int_distribution<int> distrib(9'999, 99'999);
 
-    code_ = std::to_string(distrib(g));
+    code() = std::to_string(distrib(g));
 }
 
 void otp::inquire() const noexcept
@@ -30,7 +30,7 @@ void otp::inquire() const noexcept
 void otp::recipient_email()
 {
     inquire();
-    while (std::getline(std::cin, recipient_))
+    while (std::getline(std::cin, recipient()))
     {
         trim_email();
         to_lower();
@@ -41,7 +41,7 @@ void otp::recipient_email()
 
 void otp::to_lower() noexcept
 {
-    std::transform(recipient_.begin(), recipient_.end(), recipient_.begin(),
+    std::transform(recipient().begin(), recipient().end(), recipient().begin(),
         [](unsigned char c)
         { return std::tolower(c); });
 }
@@ -55,7 +55,7 @@ void otp::trim_email() noexcept
 bool otp::is_recipient_valid() const noexcept
 {
     std::regex pattern{"(\\w+)(\\.|_)?(\\w+)@(\\w+)(\\.(\\w+))+"};
-    return std::regex_match(recipient_, pattern);
+    return std::regex_match(recipient(), pattern);
 }
 
 std::vector<char> otp::generate_characters() const noexcept
@@ -69,26 +69,26 @@ std::vector<char> otp::generate_characters() const noexcept
 
 int otp::retry() const noexcept
 {
-    std::cout << (recipient_ == smtp{}.sender() ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
+    std::cout << (recipient() == smtp{}.sender() ? "\tno please, 😃" : "\tcheck for typos or extra spaces and") << " try again: ";
     return -1;
 }
 
 int otp::verify_recipient() const noexcept
 {
-    return recipient_ == smtp{}.sender() ? retry() : is_recipient_valid() ? 0
-                                                                  : retry();
+    return recipient() == smtp{}.sender() ? retry() :
+                     is_recipient_valid() ?   0     : retry();
 }
 
 void otp::remove_leading_spaces() noexcept
 {
-    while (recipient_.starts_with(' '))
-        recipient_.erase(0, 1);
+    while (recipient().starts_with(' '))
+        recipient().erase(0, 1);
 }
 
 void otp::remove_trailing_spaces() noexcept
 {
-    while (recipient_.ends_with(' '))
-        recipient_.pop_back();
+    while (recipient().ends_with(' '))
+        recipient().pop_back();
 }
 
 void otp::authenticate_email_s()
@@ -108,8 +108,8 @@ void otp::generate_code_s() noexcept
     auto&& v = generate_characters();
     std::shuffle(v.begin(), v.end(), std::mt19937{std::random_device{}()});
 
-    code_.clear();
-    std::copy(v.begin(), v.begin() + 5, std::back_inserter(code_));
+    code().clear();
+    std::copy(v.begin(), v.begin() + 5, std::back_inserter(code()));
 }
 
 void otp::display_info() const noexcept
@@ -122,7 +122,7 @@ void otp::display_info() const noexcept
 
 auto otp::submit_code() const
 {
-    smtp _smtp(recipient_, code_);
+    smtp _smtp(recipient(), code());
     _smtp.send_email() ? throw std::runtime_error("...") : display_info();
 
     return std::chrono::system_clock::now();
@@ -144,10 +144,30 @@ int otp::declare(auto const& start) const noexcept
     return 0;
 }
 
+std::string const& otp::recipient() const noexcept
+{
+    return recipient_;
+}
+
+std::string& otp::recipient() noexcept
+{
+    return recipient_;
+}
+
+std::string& otp::code() noexcept
+{
+    return code_;
+}
+
+std::string const& otp::code() const noexcept
+{
+    return code_;
+}
+
 template <typename T>
 int otp::verify_input(T const& start, std::string const& input) const noexcept
 {
-    return input == code_ ? declare(start) : retry();
+    return input == code() ? declare(start) : retry();
 }
 
 template <typename T>

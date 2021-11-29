@@ -24,6 +24,10 @@ private:
     auto submit_code() const;
     void certify() const;
     int declare(auto const&) const noexcept;
+    std::string const& recipient() const noexcept;
+    std::string& recipient() noexcept;
+    std::string& code() noexcept;
+    std::string const& code() const noexcept;
 
     template <typename T>
     int verify_input(T const&, std::string const&) const noexcept;

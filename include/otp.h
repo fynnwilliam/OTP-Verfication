@@ -41,7 +41,7 @@ private:
     int declare(auto const&);
 
     template <typename T>
-    int verify_input(T const&);
+    int verify_input(T const&, std::string const&);
 
     template <typename T>
     void verify_code(T const&);

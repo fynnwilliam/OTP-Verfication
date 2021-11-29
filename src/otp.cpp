@@ -138,9 +138,9 @@ int otp::declare(auto const& start)
 }
 
 template <typename T>
-int otp::verify_input(T const& start)
+int otp::verify_input(T const& start, std::string const& input)
 {
-    return input_ == code_ ? declare(start) : retry();
+    return input == code_ ? declare(start) : retry();
 }
 
 template <typename T>
@@ -148,6 +148,6 @@ void otp::verify_code(T const& start)
 {
     std::string input;
     while (std::getline(std::cin, input))
-        if (!verify_input(start))
+        if (!verify_input(start, input))
             break;
 }

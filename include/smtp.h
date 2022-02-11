@@ -1,8 +1,8 @@
 #pragma once
 
+#include <curl/curl.h>
 #include <string>
 #include <vector>
-#include <curl/curl.h>
 
 class smtp
 {
@@ -24,8 +24,10 @@ private:
 
     static std::vector<std::string> payload_text_;
 
-    static size_t copy_data_to_ptr(char* ptr, std::string const& data, upload_status* upload_ctx);
-    static size_t payload_source(char* ptr, size_t size, size_t nmemb, void* userp);
+    static size_t copy_data_to_ptr(char *ptr, std::string const &data,
+                                   upload_status *upload_ctx);
+    static size_t payload_source(char *ptr, size_t size, size_t nmemb,
+                                 void *userp);
     void establish_connection();
     void set_credentials();
     void connect_to_mailserver();

@@ -22,7 +22,7 @@ target_include_directories(otp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(otp PUBLIC CURL::libcurl)
 
 if(MSVC)
-  targe_compile_options(otp PRIVATE \W4)
+  targe_compile_options(otp PRIVATE /W4 /O2)
 else()
   target_compile_options(otp PRIVATE -Wall -Wextra -O3)
 endif()

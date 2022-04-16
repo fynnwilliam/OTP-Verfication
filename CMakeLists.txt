@@ -15,11 +15,7 @@ if(NOT CURL_FOUND)
   FetchContent_MakeAvailable(curl)
 endif()
 
-if(MSVC)
-  file(GLOB_RECURSE SRC_FILES src\*.cpp)
-else()
-  file(GLOB_RECURSE SRC_FILES src/*.cpp)
-endif()
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
 add_executable(otp ${SRC_FILES})
 target_include_directories(otp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
